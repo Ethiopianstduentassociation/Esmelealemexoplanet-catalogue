@@ -9,8 +9,7 @@ st.markdown(
     "**Characterizing Confirmed & Candidate Exoplanets Strictly Within 80 Light-Years (24.53 Parsecs) "
     "for Future Habitable Worlds Observatory (HWO) Target Selection**"
 )
-
-with st.expander("📖 Read Full Introduction, Detection Methods & Habitable Worlds Observatory (HWO) Context", expanded=True):
+with st.expander("📖 Read Full Introduction, Detection Methods & Habitable Worlds Observatory (HWO) Context", expanded=False):
     st.markdown("""
     ### What Are Exoplanets?
     An **exoplanet** (extrasolar planet) is any planet located outside our Solar System. While most orbit stars other than our Sun, some drift freely through space without a host star and are known as **rogue planets**. Astronomers have confirmed over 6,000 exoplanets across the Milky Way, revealing a vast diversity of worlds grouped into four main categories:
