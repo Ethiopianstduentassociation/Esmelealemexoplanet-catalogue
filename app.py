@@ -203,21 +203,9 @@ with col_prox:
     """, unsafe_allow_html=True)
 
 with col_hab:
-    st.markdown("""
-    <div class="priority-card-green">
-        <h4>2. Priority by Habitability & Biosignature Probability</h4>
-        <p>Ranked using conservative <b>Kopparapu et al. (2013, 2014)</b> Habitable Zone placement, Earth-like stellar insolation (0.25–1.50 S⊕), rocky composition (R ≤ 1.8 R⊕), and JWST/HWO atmospheric observability.</p>
-        <b>Top 10 High-Probability Habitable & Biosignature Targets:</b>
-        <ol>
-            <li><b>Proxima Centauri b</b> (4.24 ly | 0.64 S⊕ | Teq 218 K) — Closest known terrestrial HZ world; prime HWO direct-imaging target.</li>
-            <li><b>TRAPPIST-1 e</b> (40.70 ly | 0.65 S⊕ | Teq 229 K) — Earth-sized (0.92 R⊕) transiting world; top JWST atmospheric biosignature target.</li>
-            <li><b>Teegarden's Star c</b> (12.49 ly | 0.35 S⊕ | Teq 209 K) — Low-mass (~1.05 M⊕) quiet M-dwarf HZ planet with high Earth Similarity Index.</li>
-            <li><b>GJ 1002 b</b> (15.81 ly | 0.67 S⊕ | Teq 231 K) — Earth-mass (~1.08 M⊕) temperate planet orbiting a magnetically quiet M5.5 V star.</li>
-            <li><b>GJ 1061 d</b> (11.98 ly | 0.57 S⊕ | Teq 222 K) — Temperate rocky planet (~1.67 M⊕) well inside the conservative HZ.</li>
-            <li><b>Wolf 1069 b</b> (31.26 ly | 0.65 S⊕ | Teq 250 K) — Earth-mass (~1.26 M⊕) world receiving ~65% of Earth's solar flux.</li>
-            <li><b>TRAPPIST-1 f</b> (40.70 ly | 0.37 S⊕ | Teq 199 K) — Earth-sized (1.05 R⊕) volatile-rich candidate suited for CO₂/CH₄ spectroscopy.</li>
-            <li><b>LHS 1140 b</b> (48.88 ly | 0.43 S⊕ | Teq 226 K) — Temperate super-Earth (1.73 R⊕); strong JWST candidate for N₂/CO₂ ocean-world atmosphere.</li>
-            <li><b>GJ 1002 c</b> (15.81 ly | 0.26 S⊕ | Teq 182 K) — Outer-HZ terrestrial (~1.36 M⊕) capable of sustaining liquid water under greenhouse warming.</li>
-            <li><b>TRAPPIST-1 g</b> (40.70 ly | 0.25 S⊕ | Teq 181 K) — Outer-HZ terrestrial (1.13 R⊕) completing the multi-planet comparative habitability benchmark.</li>
-        </ol>
-        <b>Top 50 Habitable & Biosignature Detection Candidates:</b>
+st.markdown("""
+<div class="publisher-footer">
+    <b>Published By: Esmelealem Haddis Bezie (Citizen Scientist)</b>
+</div>
+""", unsafe_allow_html=True)
+
