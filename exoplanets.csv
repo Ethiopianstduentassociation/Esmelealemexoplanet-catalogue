@@ -155,3 +155,32 @@ HD 40307,41.8,K2.5 V,~0.77,~0.72,~0.23,4977,HD 40307 c,Confirmed,>=6.6,-,0.0799,
 HD 40307,41.8,K2.5 V,~0.77,~0.72,~0.23,4977,HD 40307 d,Confirmed,>=9.5,-,0.1321,20.45,-,486,13.2,0.476,0.863,Interior to HZ
 HD 40307,41.8,K2.5 V,~0.77,~0.72,~0.23,4977,HD 40307 f,Confirmed,>=5.2,-,0.2475,51.76,-,355,3.75,0.476,0.863,Interior to HZ
 HD 40307,41.8,K2.5 V,~0.77,~0.72,~0.23,4977,HD 40307 g,Confirmed,>=7.1,-,0.6,197.8,-,228,0.639,0.476,0.863,Within HZ
+HD 147513,42.11,G1 V,1.07,1.0,1.08,5883,HD 147513 b,Confirmed,>=385,Uncertain,1.32,528.4,0.26,227,0.62,0.985,1.727,Within HZ
+Gliese 832 c (GJ 1265),42.5,M3.5 V,0.18,0.2,0.004,3236,GJ 1265 b,Confirmed,>=7.4,Uncertain,0.026,3.651,0.04,387,5.917,0.0658,0.1296,Interior to HZ
+GJ 3779,44.84,M4 V,0.27,0.28,0.0086,3324,GJ 3779 b,Confirmed,>=8.0,Uncertain,0.026,3.023,0.07,472,12.722,0.0962,0.1886,Interior to HZ
+Upsilon Andromedae,44.0,F8 V,1.27,1.48,3.57,6213,ups And b,Confirmed,>=218.5,Uncertain,0.059,4.617,0.022,1548,1025.56,1.771,3.076,Interior to HZ
+Upsilon Andromedae,44.0,F8 V,1.27,1.48,3.57,6213,ups And c,Confirmed,4443.0,Uncertain,0.829,241.26,0.26,413,5.194,1.771,3.076,Interior to HZ
+Upsilon Andromedae,44.0,F8 V,1.27,1.48,3.57,6213,ups And d,Confirmed,3257.0,Uncertain,2.53,1276.46,0.299,236,0.558,1.771,3.076,Within HZ
+Upsilon Andromedae,44.0,F8 V,1.27,1.48,3.57,6213,ups And e,Confirmed,>=336.6,Uncertain,5.246,3848.86,0.005,164,0.13,1.771,3.076,Outside HZ
+GJ 1265,44.8,M4.5 V,0.18,0.2,0.004,3236,GJ 1265 b,Confirmed,>=7.4,Uncertain,0.026,3.651,0.04,387,5.917,0.0658,0.1296,Interior to HZ
+HD 176051,48.5,F9 V,1.07,1.05,1.3,6000,HD 176051 b,Confirmed,476.7,Uncertain,1.76,1016.0,0.0,206,0.42,1.077,1.883,Within HZ
+LHS 1140,48.8,M4.5 V,0.184,0.215,0.0038,3096,LHS 1140 b,Confirmed,5.6,1.73,0.0946,24.737,0.043,200,0.425,0.0644,0.1274,Within HZ
+LHS 1140,48.8,M4.5 V,0.184,0.215,0.0038,3096,LHS 1140 c,Confirmed,1.91,1.272,0.0273,3.778,0.05,373,5.099,0.0644,0.1274,Interior to HZ
+47 Ursae Majoris,45.9,G1 V,1.06,1.17,1.48,5882,47 UMa b,Confirmed,>=804.1,Uncertain,2.1,1078.0,0.032,195,0.336,1.153,2.022,Outside HZ
+47 Ursae Majoris,45.9,G1 V,1.06,1.17,1.48,5882,47 UMa c,Confirmed,>=171.6,Uncertain,3.6,2391.0,0.098,149,0.114,1.153,2.022,Outside HZ
+47 Ursae Majoris,45.9,G1 V,1.06,1.17,1.48,5882,47 UMa d,Confirmed,>=521.2,Uncertain,11.6,14002.0,0.16,83,0.011,1.153,2.022,Outside HZ
+Gliese 163,49.4,M3.5 V,0.4,0.41,0.021,3460,Gliese 163 b,Confirmed,>=10.6,Uncertain,0.0607,8.631,0.073,395,5.7,0.1502,0.2921,Interior to HZ
+Gliese 163,49.4,M3.5 V,0.4,0.41,0.021,3460,Gliese 163 c,Confirmed,>=6.8,Uncertain,0.1254,25.63,0.099,275,1.335,0.1502,0.2921,Interior to HZ
+Gliese 163,49.4,M3.5 V,0.4,0.41,0.021,3460,Gliese 163 d,Confirmed,>=29.4,Uncertain,1.03,603.95,0.373,96,0.02,0.1502,0.2921,Outside HZ
+Gliese 163,49.4,M3.5 V,0.4,0.41,0.021,3460,Gliese 163 e,Confirmed,>=14.0,Uncertain,0.326,108.4,0.03,171,0.198,0.1502,0.2921,Outside HZ
+Gliese 163,49.4,M3.5 V,0.4,0.41,0.021,3460,Gliese 163 f,Confirmed,>=7.3,Uncertain,0.103,19.46,0.08,303,1.979,0.1502,0.2921,Interior to HZ
+Mu Arae,50.9,G3 IV-V,1.15,1.36,1.9,5820,mu Ara b,Confirmed,>=532.7,Uncertain,1.5,643.25,0.128,245,0.844,1.31,2.301,Within HZ
+Mu Arae,50.9,G3 IV-V,1.15,1.36,1.9,5820,mu Ara c,Confirmed,>=10.5,Uncertain,0.0909,9.639,0.172,996,229.939,1.31,2.301,Interior to HZ
+Mu Arae,50.9,G3 IV-V,1.15,1.36,1.9,5820,mu Ara d,Confirmed,>=165.9,Uncertain,0.921,310.55,0.0666,313,2.24,1.31,2.301,Interior to HZ
+Mu Arae,50.9,G3 IV-V,1.15,1.36,1.9,5820,mu Ara e,Confirmed,>=576.6,Uncertain,5.235,4205.8,0.0985,131,0.069,1.31,2.301,Outside HZ
+HD 154345,59.6,G8 V,0.89,0.86,0.61,5468,HD 154345 b,Confirmed,>=261.0,Uncertain,4.21,3340.0,0.044,110,0.034,0.757,1.351,Outside HZ
+HD 189733,64.5,K2 V,0.82,0.76,0.34,5050,HD 189733 b,Confirmed,369.0,12.67,0.0313,2.2186,0.0,1112,347.049,0.577,1.044,Interior to HZ
+GJ 3293,65.9,M2.5 V,0.42,0.4,0.022,3466,GJ 3293 b,Confirmed,>=23.54,Uncertain,0.1434,30.599,0.06,260,1.07,0.1537,0.2989,Interior to HZ
+GJ 3293,65.9,M2.5 V,0.42,0.4,0.022,3466,GJ 3293 c,Confirmed,>=21.09,Uncertain,0.3618,122.62,0.11,164,0.168,0.1537,0.2989,Outside HZ
+GJ 3293,65.9,M2.5 V,0.42,0.4,0.022,3466,GJ 3293 d,Confirmed,>=7.6,Uncertain,0.1939,48.134,0.12,224,0.585,0.1537,0.2989,Within HZ
+GJ 3293,65.9,M2.5 V,0.42,0.4,0.022,3466,GJ 3293 e,Confirmed,>=3.28,Uncertain,0.0821,13.254,0.21,344,3.264,0.1537,0.2989,Interior to HZ
