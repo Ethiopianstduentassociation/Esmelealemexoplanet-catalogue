@@ -203,6 +203,44 @@ with col_prox:
     """, unsafe_allow_html=True)
 
 with col_hab:
+    st.markdown("""
+    <div class="priority-card-green">
+        <h4>2. Priority by Habitability & Biosignature Probability</h4>
+        <p>Ranked using conservative <b>Kopparapu et al. (2013, 2014)</b> Habitable Zone placement, Earth-like stellar insolation (0.25–1.50 S⊕), rocky composition (R ≤ 1.8 R⊕), and JWST/HWO atmospheric observability.</p>
+        <b>Top 10 High-Probability Habitable & Biosignature Targets:</b>
+        <ol>
+            <li><b>Proxima Centauri b</b> (4.24 ly | 0.64 S⊕ | Teq 218 K) — Closest known terrestrial HZ world; prime HWO direct-imaging target.</li>
+            <li><b>TRAPPIST-1 e</b> (40.70 ly | 0.65 S⊕ | Teq 229 K) — Earth-sized (0.92 R⊕) transiting world; top JWST atmospheric biosignature target.</li>
+            <li><b>Teegarden's Star c</b> (12.49 ly | 0.35 S⊕ | Teq 209 K) — Low-mass (~1.05 M⊕) quiet M-dwarf HZ planet with high Earth Similarity Index.</li>
+            <li><b>GJ 1002 b</b> (15.81 ly | 0.67 S⊕ | Teq 231 K) — Earth-mass (~1.08 M⊕) temperate planet orbiting a magnetically quiet M5.5 V star.</li>
+            <li><b>GJ 1061 d</b> (11.98 ly | 0.57 S⊕ | Teq 222 K) — Temperate rocky planet (~1.67 M⊕) well inside the conservative HZ.</li>
+            <li><b>Wolf 1069 b</b> (31.26 ly | 0.65 S⊕ | Teq 250 K) — Earth-mass (~1.26 M⊕) world receiving ~65% of Earth's solar flux.</li>
+            <li><b>TRAPPIST-1 f</b> (40.70 ly | 0.37 S⊕ | Teq 199 K) — Earth-sized (1.05 R⊕) volatile-rich candidate suited for CO₂/CH₄ spectroscopy.</li>
+            <li><b>LHS 1140 b</b> (48.88 ly | 0.43 S⊕ | Teq 226 K) — Temperate super-Earth (1.73 R⊕); strong JWST candidate for N₂/CO₂ ocean-world atmosphere.</li>
+            <li><b>GJ 1002 c</b> (15.81 ly | 0.26 S⊕ | Teq 182 K) — Outer-HZ terrestrial (~1.36 M⊕) capable of sustaining liquid water under greenhouse warming.</li>
+            <li><b>TRAPPIST-1 g</b> (40.70 ly | 0.25 S⊕ | Teq 181 K) — Outer-HZ terrestrial (1.13 R⊕) completing the multi-planet comparative habitability benchmark.</li>
+        </ol>
+        <b>Top 50 Habitable & Biosignature Detection Candidates:</b>
+        <p>Encompasses all <b>41 exoplanets classified "Within HZ"</b> across our 80 light-year sample (from <b>Proxima Centauri b</b> at 4.244 ly out to <b>HIP 34222 b</b> at 74.489 ly, including <i>GJ 887 d, GJ 725 B c, GJ 251 c, GJ 229 A c, HD 180617 b, HD 20794 f, HN Librae b, GJ 667 C e, GJ 3378 b, GJ 357 d, HD 147379 b, GJ 1148 b, GJ 96 b, 55 Cancri f, HD 40307 g, Upsilon Andromedae d, Gamma Cephei b, HD 160691 b, HD 48948 d, HD 10647 b, GJ 3293 d, BD-06 1339 c, HD 114783 b, 16 Cygni B b, HD 210277 b, HD 19994 b</i>) plus the <b>9 nearest temperate inner/outer-edge rocky candidates</b> (such as <i>Ross 128 b, GJ 273 b, TRAPPIST-1 d, and GJ 357 c</i>) that retain habitable surface conditions under cloud feedback or dense CO₂ atmospheres.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+top50_prox_table = df.iloc[:50][
+    ["Planet Name", "Host Star", "Distance (ly)", "Spectral Type", "Mass (M_Earth)", "Radius (R_Earth)", "Equilibrium Temp (K)", "HZ Verdict"]
+].copy()
+top50_prox_table.insert(0, "Rank", range(1, len(top50_prox_table) + 1))
+
+st.markdown("#### 📋 Reference Table: Top 50 Nearest Exoplanets (4.244 – 18.201 Light-Years)")
+st.dataframe(top50_prox_table.style.map(style_verdict, subset=["HZ Verdict"]), use_container_width=True, hide_index=True)
+
+st.subheader("📚 Data Notes, Equations & Methodology")
+st.markdown("""
+* **Scope:** Every confirmed planet (plus candidate Proxima Centauri c) whose host star lies within **80 light-years** (248 host stars, 420 planets), ranked by distance from the Sun.
+* **Habitable Zone Model:** Conservative **Kopparapu et al. (2013, 2014)** runaway-greenhouse (inner) and maximum-greenhouse (outer) limits using stellar luminosity and effective temperature.
+* **Approximations (`~`):** Marks estimated or recalled literature values (main-sequence stellar relations after Pecaut & Mamajek; Chen & Kipping style planetary mass–radius relation).
+* **Equilibrium Temperature & Flux:** Calculated via `S = L / a²` and `Teq = 255 K × S^0.25` (Bond albedo 0.3, full heat redistribution) where archive values were unavailable.
+""")
+
 st.markdown("""
 <div class="publisher-footer">
     <b>Published By: Esmelealem Haddis Bezie (Citizen Scientist)</b>
