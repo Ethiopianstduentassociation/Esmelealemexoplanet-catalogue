@@ -24,6 +24,22 @@ st.markdown("""
         margin-bottom: 1rem;
         color: #064e3b;
     }
+    .priority-card-blue {
+        background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+        border-left: 6px solid #2563eb;
+        padding: 1.3rem 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 1.2rem;
+        color: #1e3a8a;
+    }
+    .priority-card-green {
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        border-left: 6px solid #059669;
+        padding: 1.3rem 1.5rem;
+        border-radius: 10px;
+        margin-bottom: 1.2rem;
+        color: #064e3b;
+    }
     .publisher-footer {
         background: linear-gradient(135deg, #0b132b 0%, #1c2541 100%);
         color: #5bc0be;
@@ -129,7 +145,7 @@ p_df = p_df[p_df["A_num"] < 50].rename(columns={"A_num": "Semimajor Axis (AU)", 
 if not p_df.empty:
     st.scatter_chart(p_df, x="Semimajor Axis (AU)", y="Equilibrium Temp (K)", color="HZ Verdict")
 
-col_title, col_dl = st.columns([4, 1])
+col_title, col_dl = st.columns([3, 1])
 with col_title:
     st.subheader("🪐 Complete 19-Parameter Exoplanet & Host Star Catalogue")
 with col_dl:
@@ -156,16 +172,6 @@ display_table = filt.drop(columns=["T_num", "A_num", "R_num", "Star Class"]).cop
 display_table.insert(0, "No.", range(1, len(display_table) + 1))
 st.dataframe(display_table.style.map(style_verdict, subset=["HZ Verdict"]), use_container_width=True, hide_index=True)
 
-st.subheader("📚 Data Notes, Equations & Methodology")
-st.markdown("""
-* **Scope:** Every confirmed planet (plus candidate Proxima Centauri c) whose host star lies within **80 light-years** (248 host stars, 420 planets), ranked by distance from the Sun.
-* **Habitable Zone Model:** Conservative **Kopparapu et al. (2013, 2014)** runaway-greenhouse (inner) and maximum-greenhouse (outer) limits using stellar luminosity and effective temperature.
-* **Approximations (`~`):** Marks estimated or recalled literature values (main-sequence stellar relations after Pecaut & Mamajek; Chen & Kipping style planetary mass–radius relation).
-* **Equilibrium Temperature & Flux:** Calculated via `S = L / a²` and `Teq = 255 K × S^0.25` (Bond albedo 0.3, full heat redistribution) where archive values were unavailable.
-""")
-
-st.markdown("""
-<div class="publisher-footer">
-    <b>Published By: Esmelealem Haddis Bezie (Citizen Scientist)</b>
-</div>
-""", unsafe_allow_html=True)
+st.markdown("---")
+st.subheader("🔭 HWO Observation Priority Rankings: Proximity & Biosignature Potential")
+st.markdown(
