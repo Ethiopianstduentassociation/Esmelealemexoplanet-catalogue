@@ -1,56 +1,125 @@
 import streamlit as st
 import pandas as pd
-import urllib.request
 
-st.set_page_config(page_title="Exoplanet Catalogue", layout="wide")
-st.title("🪐 Interactive Exoplanet Catalogue")
-st.write("Live astronomical data queried from the NASA Exoplanet Archive.")
+st.set_page_config(page_title="HWO Nearby Exoplanet Catalogue", layout="wide")
+st.title("🪐 Solar Neighborhood Exoplanet Catalogue (HWO Target Sample)")
+st.markdown(
+    "Complete characterization of **60 confirmed & candidate exoplanets across the 30 nearest host star systems** "
+    "using conservative **Kopparapu et al. (2013, 2014)** Habitable Zone boundaries to support future "
+    "**Habitable Worlds Observatory (HWO)** direct-imaging target selection."
+)
 
-@st.cache_data(ttl=3600)
-def load_data():
-    url = "https://caltech.edu"
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-        with urllib.request.urlopen(req, timeout=15) as response:
-            return pd.read_csv(response)
-    except Exception:
-        rows = [
-            ("Proxima Cen b", "Proxima Cen", "Radial Velocity", 2016, 1.03, 1.07, 234.0, 1.30),
-            ("TRAPPIST-1 e", "TRAPPIST-1", "Transit", 2017, 0.92, 0.69, 251.0, 12.43),
-            ("Kepler-186 f", "Kepler-186", "Transit", 2014, 1.17, 1.71, 188.0, 178.5),
-            ("51 Peg b", "51 Peg", "Radial Velocity", 1995, 14.3, 150.0, 1284.0, 15.47),
-            ("HD 209458 b", "HD 209458", "Transit", 1999, 15.6, 220.0, 1449.0, 48.3),
-            ("Kepler-452 b", "Kepler-452", "Transit", 2015, 1.63, 3.29, 265.0, 561.0),
-            ("TOI-700 d", "TOI-700", "Transit", 2020, 1.19, 1.72, 269.0, 31.1),
-            ("LHS 1140 b", "LHS 1140", "Transit", 2017, 1.73, 5.60, 235.0, 14.99),
-            ("GJ 1214 b", "GJ 1214", "Transit", 2009, 2.74, 8.17, 596.0, 14.65),
-            ("K2-18 b", "K2-18", "Transit", 2015, 2.61, 8.63, 255.0, 38.0)
-        ]
-        cols = ["pl_name", "hostname", "discoverymethod", "disc_year", "pl_rade", "pl_bmasse", "pl_eqt", "sy_dist"]
-        return pd.DataFrame(rows, columns=cols)
-
-df = load_data()
-
-# Sidebar filters
-st.sidebar.header("Filter Planets")
-available_methods = df["discoverymethod"].dropna().unique().tolist()
-default_methods = ["Transit"] if "Transit" in available_methods else available_methods
-methods = st.sidebar.multiselect("Discovery Method", available_methods, default=default_methods)
-max_radius = st.sidebar.slider("Max Planet Radius (Earth Radii)", 0.5, 25.0, 15.0)
-
-filtered_df = df[(df["discoverymethod"].isin(methods)) & (df["pl_rade"] <= max_radius)]
-
-# Key metrics
-col1, col2, col3 = st.columns(3)
-col1.metric("Matching Exoplanets", len(filtered_df))
-col2.metric("Closest Planet (Parsecs)", round(filtered_df["sy_dist"].min(), 2) if not filtered_df.empty else "N/A")
-col3.metric("Avg Equilibrium Temp (K)", round(filtered_df["pl_eqt"].mean(), 1) if not filtered_df.empty else "N/A")
-
-# Scatter plot & Data Table
-st.subheader("Planet Radius vs. Mass")
-plot_df = filtered_df.dropna(subset=["pl_rade", "pl_bmasse"])
-if not plot_df.empty:
-    st.scatter_chart(plot_df, x="pl_rade", y="pl_bmasse")
-
-st.subheader("Catalogue Data")
-st.dataframe(filtered_df, use_container_width=True)
+rows = [
+    ("Proxima Centauri", 4.244, "M5.5 V", 0.1221, 0.141, 0.00151, 2900, "Proxima b", "Confirmed", "1.055", "~1.02", 0.04848, 11.18465, "~0", "218", "0.641", 0.0418, 0.0823, "Within HZ"),
+    ("Proxima Centauri", 4.244, "M5.5 V", 0.1221, 0.141, 0.00151, 2900, "Proxima c", "Candidate", "5.8", "Unknown", 1.48, 1900.0, "~0", "~39", "—", 0.0418, 0.0823, "Outside HZ"),
+    ("Proxima Centauri", 4.244, "M5.5 V", 0.1221, 0.141, 0.00151, 2900, "Proxima d", "Confirmed", "0.260", "~0.692", 0.02881, 5.12338, "~0", "282", "1.814", 0.0418, 0.0823, "Interior to HZ"),
+    ("Barnard's Star", 5.963, "M4.0 V", 0.162, 0.187, 0.0034, 3195, "Barnard's Star b", "Confirmed", "≥0.30", "—", 0.0229, 3.154, "0.03", "407", "6.48", 0.0606, 0.119, "Interior to HZ"),
+    ("Barnard's Star", 5.963, "M4.0 V", 0.162, 0.187, 0.0034, 3195, "Barnard's Star c", "Confirmed", "≥0.34", "—", 0.0274, 4.124, "0.08", "372", "4.53", 0.0606, 0.119, "Interior to HZ"),
+    ("Barnard's Star", 5.963, "M4.0 V", 0.162, 0.187, 0.0034, 3195, "Barnard's Star d", "Confirmed", "≥0.26", "—", 0.0188, 2.340, "0.04", "449", "9.62", 0.0606, 0.119, "Interior to HZ"),
+    ("Barnard's Star", 5.963, "M4.0 V", 0.162, 0.187, 0.0034, 3195, "Barnard's Star e", "Confirmed", "≥0.19", "—", 0.0381, 6.739, "0.04", "315", "2.34", 0.0606, 0.119, "Interior to HZ"),
+    ("Lalande 21185 (Gliese 411)", 8.304, "M2.0 V", 0.46, 0.39, 0.0196, 3601, "Lalande 21185 b", "Confirmed", "≥2.69", "—", 0.0788, 12.94, "0.06", "340", "3.16", 0.145, 0.28, "Interior to HZ"),
+    ("Lalande 21185 (Gliese 411)", 8.304, "M2.0 V", 0.46, 0.39, 0.0196, 3601, "Lalande 21185 c", "Confirmed", "≥13.6", "—", 2.94, 2946.0, "0.13", "56", "0.00227", 0.145, 0.28, "Outside HZ"),
+    ("Epsilon Eridani", 10.501, "K2 V", 0.82, 0.74, 0.34, 5084, "Epsilon Eridani b (Ægir)", "Confirmed", "318", "—", 3.53, 2680.0, "0.06", "104", "0.0273", 0.576, 1.04, "Outside HZ"),
+    ("Gliese 887 (Lacaille 9352)", 10.724, "M0.5 V", 0.489, 0.47, 0.035, 3688, "Gliese 887 b", "Confirmed", "≥3.9", "—", 0.068, 9.262, "0.14", "423", "7.57", 0.193, 0.372, "Interior to HZ"),
+    ("Gliese 887 (Lacaille 9352)", 10.724, "M0.5 V", 0.489, 0.47, 0.035, 3688, "Gliese 887 c", "Confirmed", "≥6.5", "—", 0.121, 21.78, "0.17", "317", "2.39", 0.193, 0.372, "Interior to HZ"),
+    ("Gliese 887 (Lacaille 9352)", 10.724, "M0.5 V", 0.489, 0.47, 0.035, 3688, "Gliese 887 d", "Confirmed (2026)", "≥6.1", "—", 0.212, 50.77, "0.25", "240", "0.779", 0.193, 0.372, "Within HZ"),
+    ("Gliese 887 (Lacaille 9352)", 10.724, "M0.5 V", 0.489, 0.47, 0.035, 3688, "Gliese 887 e", "Confirmed (2026)", "≥1.46", "—", 0.042, 4.42, "—", "538", "19.8", 0.193, 0.372, "Interior to HZ"),
+    ("Ross 128", 11.007, "M4.0 V", 0.168, 0.197, 0.0036, 3192, "Ross 128 b", "Confirmed", "≥1.40", "—", 0.0496, 9.866, "0.12", "281", "1.47", 0.0625, 0.123, "Interior to HZ"),
+    ("Gliese 725 A", 11.491, "M3.0 V", 0.330, 0.35, 0.016, 3400, "Gliese 725 A b", "Confirmed", "≥2.78", "—", 0.068, 11.2201, "0.0", "348", "3.46", 0.131, 0.256, "Interior to HZ"),
+    ("Gliese 725 B", 11.491, "M3.5 V", 0.25, 0.28, 0.0075, 3300, "Gliese 725 B c", "Confirmed", "≥3.4", "—", 0.139, 37.9, "—", "201", "0.388", 0.0899, 0.176, "Within HZ"),
+    ("Groombridge 34 A (Gliese 15 A)", 11.619, "M1.5 V", 0.38, 0.38, 0.0215, 3600, "Groombridge 34 A b", "Confirmed", "≥3.03", "—", 0.072, 11.44, "0.09", "364", "4.15", 0.152, 0.293, "Interior to HZ"),
+    ("Groombridge 34 A (Gliese 15 A)", 11.619, "M1.5 V", 0.38, 0.38, 0.0215, 3600, "Groombridge 34 A c", "Confirmed", "≥36", "—", 5.4, 7600.0, "0.27", "42", "0.000737", 0.152, 0.293, "Outside HZ"),
+    ("Epsilon Indi A", 11.867, "K5 V", 0.762, 0.73, 0.22, 4630, "Epsilon Indi A Ab", "Confirmed", "2,005", "—", 28.4, 63400.0, "0.40", "~275*", "0.000273", 0.473, 0.869, "Outside HZ"),
+    ("GJ 1061", 11.984, "M5.5 V", 0.113, 0.156, 0.0017, 2953, "GJ 1061 b", "Confirmed", "≥1.37", "—", 0.021, 3.204, "<0.31", "358", "3.88", 0.0431, 0.0859, "Interior to HZ"),
+    ("GJ 1061", 11.984, "M5.5 V", 0.113, 0.156, 0.0017, 2953, "GJ 1061 c", "Confirmed", "≥1.74", "—", 0.035, 6.689, "<0.29", "277", "1.4", 0.0431, 0.0859, "Interior to HZ"),
+    ("GJ 1061", 11.984, "M5.5 V", 0.113, 0.156, 0.0017, 2953, "GJ 1061 d", "Confirmed", "≥1.64", "—", 0.054, 13.03, "<0.53", "223", "0.586", 0.0431, 0.0859, "Within HZ"),
+    ("YZ Ceti", 12.122, "M4.5 V", 0.130, 0.168, 0.0022, 3056, "YZ Ceti b", "Confirmed", "≥0.70", "—", 0.0163, 2.021, "0.06", "433", "8.28", 0.0488, 0.0969, "Interior to HZ"),
+    ("YZ Ceti", 12.122, "M4.5 V", 0.130, 0.168, 0.0022, 3056, "YZ Ceti c", "Confirmed", "≥1.14", "—", 0.0216, 3.060, "0.0", "376", "4.72", 0.0488, 0.0969, "Interior to HZ"),
+    ("YZ Ceti", 12.122, "M4.5 V", 0.130, 0.168, 0.0022, 3056, "YZ Ceti d", "Confirmed", "≥1.09", "—", 0.0285, 4.656, "0.07", "327", "2.71", 0.0488, 0.0969, "Interior to HZ"),
+    ("Luyten's Star (Gliese 273)", 12.348, "M3.5 V", 0.29, 0.29, 0.0088, 3382, "Luyten's Star b", "Confirmed", "≥2.89", "—", 0.0911, 18.65, "0.17", "259", "1.06", 0.0973, 0.19, "Interior to HZ"),
+    ("Luyten's Star (Gliese 273)", 12.348, "M3.5 V", 0.29, 0.29, 0.0088, 3382, "Luyten's Star c", "Confirmed", "≥1.18", "—", 0.0365, 4.723, "0.10", "409", "6.61", 0.0973, 0.19, "Interior to HZ"),
+    ("Teegarden's Star", 12.497, "M7.0 V", 0.08, 0.107, 0.0007, 2904, "Teegarden's Star b", "Confirmed", "≥1.16", "—", 0.0259, 4.906, "0.03", "260", "1.09", 0.0282, 0.0563, "Interior to HZ"),
+    ("Teegarden's Star", 12.497, "M7.0 V", 0.08, 0.107, 0.0007, 2904, "Teegarden's Star c", "Confirmed", "≥1.05", "—", 0.0455, 11.42, "0.04", "197", "0.353", 0.0282, 0.0563, "Within HZ"),
+    ("Teegarden's Star", 12.497, "M7.0 V", 0.08, 0.107, 0.0007, 2904, "Teegarden's Star d", "Confirmed", "≥0.82", "—", 0.0791, 26.13, "0.07", "149", "0.117", 0.0282, 0.0563, "Outside HZ"),
+    ("Wolf 1061", 14.050, "M3.0 V", 0.25, 0.31, 0.0098, 3342, "Wolf 1061 b", "Confirmed", "≥1.91", "—", 0.0375, 4.887, "0.15", "414", "6.97", 0.103, 0.201, "Interior to HZ"),
+    ("Wolf 1061", 14.050, "M3.0 V", 0.25, 0.31, 0.0098, 3342, "Wolf 1061 c", "Confirmed", "≥3.41", "—", 0.089, 17.87, "0.11", "269", "1.24", 0.103, 0.201, "Interior to HZ"),
+    ("Wolf 1061", 14.050, "M3.0 V", 0.25, 0.31, 0.0098, 3342, "Wolf 1061 d", "Confirmed", "≥7.7", "—", 0.47, 217.0, "0.55", "117", "0.0444", 0.103, 0.201, "Outside HZ"),
+    ("TZ Arietis", 14.578, "M4.5 V", 0.14, 0.16, 0.0025, 3100, "TZ Arietis b", "Confirmed", "≥67", "—", 0.88, 771.0, "0.46", "61", "0.00323", 0.052, 0.103, "Outside HZ"),
+    ("Gliese 687", 14.839, "M3.0 V", 0.41, 0.42, 0.0216, 3413, "Gliese 687 b", "Confirmed", "≥17.2", "—", 0.163, 38.14, "0.17", "242", "0.813", 0.152, 0.297, "Within HZ"),
+    ("Gliese 687", 14.839, "M3.0 V", 0.41, 0.42, 0.0216, 3413, "Gliese 687 c", "Confirmed", "≥16.0", "—", 1.165, 728.0, "0.40", "91", "0.0159", 0.152, 0.297, "Outside HZ"),
+    ("Gliese 674", 14.849, "M2.5 V", 0.35, 0.36, 0.0155, 3400, "Gliese 674 b", "Confirmed", "≥11.1", "—", 0.039, 4.694, "0.20", "456", "10.2", 0.129, 0.252, "Interior to HZ"),
+    ("Gliese 876", 15.238, "M4.0 V", 0.33, 0.36, 0.0124, 3129, "Gliese 876 b", "Confirmed", "749", "—", 0.2098, 61.10, "0.03", "186", "0.282", 0.116, 0.229, "Within HZ"),
+    ("Gliese 876", 15.238, "M4.0 V", 0.33, 0.36, 0.0124, 3129, "Gliese 876 c", "Confirmed", "235", "—", 0.1309, 30.10, "0.26", "235", "0.724", 0.116, 0.229, "Within HZ"),
+    ("Gliese 876", 15.238, "M4.0 V", 0.33, 0.36, 0.0124, 3129, "Gliese 876 d", "Confirmed", "6.68", "—", 0.021, 1.938, "0.04", "587", "28.1", 0.116, 0.229, "Interior to HZ"),
+    ("Gliese 876", 15.238, "M4.0 V", 0.33, 0.36, 0.0124, 3129, "Gliese 876 e", "Confirmed", "16", "—", 0.3355, 123.6, "0.05", "147", "0.11", 0.116, 0.229, "Outside HZ"),
+    ("GJ 1002", 15.806, "M5.0 V", 0.12, 0.137, 0.0011, 3024, "GJ 1002 b", "Confirmed", "≥1.08", "—", 0.0457, 10.35, "—", "217", "0.527", 0.0345, 0.0686, "Within HZ"),
+    ("GJ 1002", 15.806, "M5.0 V", 0.12, 0.137, 0.0011, 3024, "GJ 1002 c", "Confirmed", "≥1.36", "—", 0.0738, 21.2, "—", "171", "0.202", 0.0345, 0.0686, "Outside HZ"),
+    ("Gliese 832", 16.200, "M1.5 V", 0.45, 0.48, 0.031, 3590, "Gliese 832 b", "Confirmed", "315", "—", 3.7, 3853.0, "0.05", "56", "0.00226", 0.182, 0.352, "Outside HZ"),
+    ("GJ 3323", 17.531, "M4.0 V", 0.164, 0.20, 0.0030, 3159, "GJ 3323 b", "Confirmed", "≥2.0", "—", 0.0328, 5.36, "0.2", "330", "2.79", 0.057, 0.112, "Interior to HZ"),
+    ("GJ 3323", 17.531, "M4.0 V", 0.164, 0.20, 0.0030, 3159, "GJ 3323 c", "Confirmed", "≥2.3", "—", 0.126, 40.5, "0.2", "168", "0.189", 0.057, 0.112, "Outside HZ"),
+    ("Gliese 251", 18.215, "M3.0 V", 0.372, 0.37, 0.015, 3350, "Gliese 251 b", "Confirmed", "≥3.85", "—", 0.0808, 14.2370, "—", "314", "2.3", 0.127, 0.249, "Interior to HZ"),
+    ("Gliese 251", 18.215, "M3.0 V", 0.372, 0.37, 0.015, 3350, "Gliese 251 c", "Confirmed", "≥3.84", "—", 0.196, 53.647, "—", "202", "0.39", 0.127, 0.249, "Within HZ"),
+    ("Gliese 752 A", 19.292, "M3.0 V", 0.46, 0.47, 0.030, 3550, "Gliese 752 A b", "Confirmed", "≥12.2", "—", 0.343, 106.0, "0.10", "181", "0.255", 0.179, 0.347, "Within HZ"),
+    ("82 G. Eridani (HD 20794)", 19.704, "G8 V", 0.79, 0.92, 0.65, 5401, "82 G. Eridani b", "Confirmed", "≥2.15", "—", 0.126, 18.3, "0.06", "645", "40.9", 0.783, 1.4, "Interior to HZ"),
+    ("82 G. Eridani (HD 20794)", 19.704, "G8 V", 0.79, 0.92, 0.65, 5401, "82 G. Eridani c", "Confirmed", "≥2.98", "—", 0.363, 89.7, "0.08", "380", "4.93", 0.783, 1.4, "Interior to HZ"),
+("82 G. Eridani (HD 20794)", 19.704, "G8 V", 0.79, 0.92, 0.65, 5401, "82 G. Eridani d", "Confirmed", "≥5.82", "—", 1.354, 648.0, "0.45", "197", "0.355", 0.783, 1.4, "Within HZ"),
+("HN Librae", 20.395, "M3.0 V", 0.29, 0.30, 0.0090, 3250, "HN Librae b", "Confirmed", "≥5.5", "—", 0.142, 36.1, "0.08", "208", "0.446", 0.0986, 0.194, "Within HZ"),
+("EQ Pegasi A", 20.400, "M3.5 V", 0.436, 0.35, 0.015, 3500, "EQ Pegasi A b", "Confirmed", "718", "—", 0.643, 284.0, "0.35", "111", "0.0363", 0.127, 0.246, "Outside HZ"),
+("Gliese 581", 20.549, "M3.0 V", 0.295, 0.30, 0.012, 3498, "Gliese 581 b", "Confirmed", "20.5", "—", 0.0399, 5.37, "0.03", "423", "7.54", 0.113, 0.22, "Interior to HZ"),
+("Gliese 581", 20.549, "M3.0 V", 0.295, 0.30, 0.012, 3498, "Gliese 581 c", "Confirmed", "6.8", "—", 0.0718, 12.9, "0.03", "315", "2.33", 0.113, 0.22, "Interior to HZ"),
+("Gliese 581", 20.549, "M3.0 V", 0.295, 0.30, 0.012, 3498, "Gliese 581 e", "Confirmed", "2.5", "—", 0.028, 3.15, "0.01", "504", "15.3", 0.113, 0.22, "Interior to HZ"),
+("Gliese 338 B", 20.658, "K7 V", 0.64, 0.57, 0.08, 4000, "Gliese 338 B b", "Confirmed", "≥10.3", "—", 0.141, 24.5, "0.11", "361", "4.02", 0.291, 0.551, "Interior to HZ"),
+("Gliese 625", 21.131, "M1.5 V", 0.30, 0.33, 0.013, 3500, "Gliese 625 b", "Confirmed", "≥2.8", "—", 0.0784, 14.6, "~0.1", "308", "2.12", 0.118, 0.229, "Interior to HZ"),
+]
+cols = [
+"Host Star", "Distance (ly)", "Spectral Type", "Stellar Mass (M_Sun)",
+"Stellar Radius (R_Sun)", "Stellar Luminosity (L_Sun)", "Stellar Temp (K)",
+"Planet Name", "Detection Status", "Mass (M_Earth)", "Radius (R_Earth)",
+"Semimajor Axis (AU)", "Orbital Period (days)", "Eccentricity",
+"Equilibrium Temp (K)", "Incident Flux (S_Earth)",
+"HZ Inner (AU)", "HZ Outer (AU)", "HZ Verdict"
+]
+df = pd.DataFrame(rows, columns=cols)
+df["Temp_Numeric"] = df["Equilibrium Temp (K)"].astype(str).str.replace("~", "").str.replace("*", "").astype(float)
+st.sidebar.header("Filter HWO Target Sample")
+verdict_filter = st.sidebar.multiselect(
+"Habitable Zone Verdict",
+["Within HZ", "Interior to HZ", "Outside HZ"],
+default=["Within HZ", "Interior to HZ", "Outside HZ"]
+)
+spectral_filter = st.sidebar.multiselect(
+"Host Star Spectral Type",
+sorted(df["Spectral Type"].unique()),
+default=sorted(df["Spectral Type"].unique())
+)
+max_dist = st.sidebar.slider("Max Distance from Sun (Light-Years)", 4.0, 22.0, 22.0)
+star_search = st.sidebar.text_input("Search Host Star or Planet")
+filtered_df = df[
+(df["HZ Verdict"].isin(verdict_filter)) &
+(df["Spectral Type"].isin(spectral_filter)) &
+(df["Distance (ly)"] <= max_dist)
+]
+if star_search:
+filtered_df = filtered_df[
+filtered_df["Host Star"].str.contains(star_search, case=False) |
+filtered_df["Planet Name"].str.contains(star_search, case=False)
+]
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Planets Shown", len(filtered_df))
+col2.metric("Within Habitable Zone", len(filtered_df[filtered_df["HZ Verdict"] == "Within HZ"]))
+col3.metric("Nearest System (ly)", round(filtered_df["Distance (ly)"].min(), 3) if not filtered_df.empty else "N/A")
+col4.metric("Avg Equilibrium Temp (K)", round(filtered_df["Temp_Numeric"].mean(), 1) if not filtered_df.empty else "N/A")
+st.subheader("Orbital Distance (AU) vs. Equilibrium Temperature (K)")
+if not filtered_df.empty:
+chart_df = filtered_df.rename(columns={"Temp_Numeric": "Equilibrium Temperature (K)"})
+st.scatter_chart(chart_df, x="Semimajor Axis (AU)", y="Equilibrium Temperature (K)", color="HZ Verdict")
+st.subheader("Full 19-Parameter Exoplanet & Host Star Catalogue")
+display_df = filtered_df.drop(columns=["Temp_Numeric"])
+st.dataframe(display_df, use_container_width=True)
+with st.expander("Methodology, Data Notes & Habitable Zone Model"):
+st.markdown("""
+* Habitable Zone Model: Conservative Kopparapu et al. (2013, 2014) runaway-greenhouse (inner) and maximum-greenhouse (outer) limits using stellar luminosity and effective temperature.
+* Mass Notation (≥): Marks minimum mass ($M \sin i$) from radial-velocity detections; values without ≥ represent true-mass solutions.
+* Equilibrium Temperature: Calculated assuming a Bond albedo of 0.3 and full heat redistribution (* for Epsilon Indi Ab denotes measured JWST internal-heat temperature).
+* Data Sources: NASA Exoplanet Archive & Wikipedia List of nearest exoplanets (as of April 2026, retrieved November 2026), including 2025–2026 confirmations (Gliese 725 B c, Gliese 887 d & e).
+""")
