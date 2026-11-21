@@ -53,13 +53,13 @@ An **exoplanet** (extrasolar planet) is any planet located outside our Solar Sys
 """)
 
 df = pd.read_csv("exoplanets.csv", on_bad_lines="skip").dropna(subset=["Planet Name"])
-df["Distance (ly)"] = pd.to_numeric(df["Distance (ly)"], errors="coerce")
-df = df[df["Distance (ly)"] <= 80.0].drop_duplicates(subset=["Planet Name"]).sort_values("Distance (ly)").reset_index(drop=True)
-df["T_num"] = pd.to_numeric(df["Equilibrium Temp (K)"].astype(str).str.replace("~","",regex=False).str.replace(",","",regex=False), errors="coerce")
-df["A_num"] = pd.to_numeric(df["Semimajor Axis (AU)"].astype(str).str.replace("~","",regex=False).str.replace(",","",regex=False), errors="coerce")
+df["Distance (ly)"] = pd.to_numeric(df["Distance (ly)"].astype(str).str.replace("~", "", regex=False).str.strip(), errors="coerce")
+df = df[df["Distance (ly)"].isna() | (df["Distance (ly)"] <= 80.0)].sort_values("Distance (ly)").reset_index(drop=True)
+df["T_num"] = pd.to_numeric(df["Equilibrium Temp (K)"].astype(str).str.replace("~", "", regex=False).str.replace("*", "", regex=False).str.replace(",", "", regex=False), errors="coerce")
+df["A_num"] = pd.to_numeric(df["Semimajor Axis (AU)"].astype(str).str.replace("~", "", regex=False).str.replace(",", "", regex=False), errors="coerce")
 
 st.sidebar.header("🔭 Filter HWO Target Sample")
-verdict_opts = [v for v in ["Within HZ", "Interior to HZ", "Outside HZ", "Unknown", "Uncertain"] if v in df["HZ Verdict"].dropna().unique()]
+verdict_opts = sorted(df["HZ Verdict"].dropna().unique())
 verdicts = st.sidebar.multiselect("Habitable Zone Verdict", verdict_opts, default=verdict_opts)
 
 def star_group(sp):
@@ -83,7 +83,7 @@ filt = df[
     (df["HZ Verdict"].isin(verdicts)) &
     (df["Star Class"].isin(star_classes)) &
     (df["Detection Status"].isin(statuses)) &
-    (df["Distance (ly)"] <= max_d)
+    (df["Distance (ly)"].isna() | (df["Distance (ly)"] <= max_d))
 ]
 if q_str:
     filt = filt[
