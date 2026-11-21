@@ -51,4 +51,3 @@ if not plot_df.empty:
 
 st.subheader("Catalogue Data")
 st.dataframe(filtered_df, use_container_width=True)
-
