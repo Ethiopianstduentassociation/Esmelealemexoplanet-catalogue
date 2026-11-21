@@ -94,12 +94,12 @@ filt = df[
     (df["Star Class"].isin(star_classes)) &
     (df["Detection Status"].isin(statuses)) &
     (df["Distance (ly)"].isna() | (df["Distance (ly)"] <= max_d))
-]
+].reset_index(drop=True)
 if q_str:
     filt = filt[
         filt["Host Star"].astype(str).str.contains(q_str, case=False, na=False) |
         filt["Planet Name"].astype(str).str.contains(q_str, case=False, na=False)
-    ]
+    ].reset_index(drop=True)
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Catalogued Exoplanets", len(filt))
@@ -116,8 +116,9 @@ st.markdown("""
 
 hwo_top = filt[(filt["HZ Verdict"] == "Within HZ") & (filt["R_num"] <= 1.8)][
     ["Planet Name", "Host Star", "Distance (ly)", "Spectral Type", "Mass (M_Earth)", "Radius (R_Earth)", "Semimajor Axis (AU)", "Equilibrium Temp (K)", "Incident Flux (S_Earth)"]
-]
+].reset_index(drop=True)
 if not hwo_top.empty:
+    hwo_top.insert(0, "No.", range(1, len(hwo_top) + 1))
     st.dataframe(hwo_top, use_container_width=True, hide_index=True)
 else:
     st.info("Adjust sidebar filters to display rocky Habitable Zone candidates (≤ 1.8 R⊕).")
@@ -128,11 +129,12 @@ p_df = p_df[p_df["A_num"] < 50].rename(columns={"A_num": "Semimajor Axis (AU)", 
 if not p_df.empty:
     st.scatter_chart(p_df, x="Semimajor Axis (AU)", y="Equilibrium Temp (K)", color="HZ Verdict")
 
-col_title, col_dl = st.columns([3, 1])
+col_title, col_dl = st.columns([4, 1])
 with col_title:
     st.subheader("🪐 Complete 19-Parameter Exoplanet & Host Star Catalogue")
 with col_dl:
-    clean_export = filt.drop(columns=["T_num", "A_num", "R_num", "Star Class"])
+    clean_export = filt.drop(columns=["T_num", "A_num", "R_num", "Star Class"]).copy()
+    clean_export.insert(0, "No.", range(1, len(clean_export) + 1))
     st.download_button(
         label="⬇️ Download Filtered CSV",
         data=clean_export.to_csv(index=False).encode("utf-8"),
@@ -150,7 +152,8 @@ def style_verdict(val):
         return "background-color: #e0f2fe; color: #075985; font-weight: 600;"
     return "background-color: #f3f4f6; color: #374151;"
 
-display_table = filt.drop(columns=["T_num", "A_num", "R_num", "Star Class"])
+display_table = filt.drop(columns=["T_num", "A_num", "R_num", "Star Class"]).copy()
+display_table.insert(0, "No.", range(1, len(display_table) + 1))
 st.dataframe(display_table.style.map(style_verdict, subset=["HZ Verdict"]), use_container_width=True, hide_index=True)
 
 st.subheader("📚 Data Notes, Equations & Methodology")
