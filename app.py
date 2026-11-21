@@ -14,17 +14,20 @@ def load_data():
         with urllib.request.urlopen(req, timeout=15) as response:
             return pd.read_csv(response)
     except Exception:
-        data = {
-            "pl_name": ["Proxima Cen b", "TRAPPIST-1 e", "Kepler-186 f", "51 Peg b", "HD 209458 b", "Kepler-452 b", "TOI-700 d", "LHS 1140 b", "GJ 1214 b", "K2-18 b"],
-            "hostname": ["Proxima Cen", "TRAPPIST-1", "Kepler-186", "51 Peg", "HD 209458", "Kepler-452", "TOI-700", "LHS 1140", "GJ 1214", "K2-18"],
-            "discoverymethod": ["Radial Velocity", "Transit", "Transit", "Radial Velocity", "Transit", "Transit", "Transit", "Transit", "Transit", "Transit"],
-            "disc_year":,
-            "pl_rade": [1.03, 0.92, 1.17, 14.3, 15.6, 1.63, 1.19, 1.73, 2.74, 2.61],
-            "pl_bmasse": [1.07, 0.69, 1.71, 150.0, 220.0, 3.29, 1.72, 5.60, 8.17, 8.63],
-            "pl_eqt":,
-            "sy_dist": [1.30, 12.43, 178.5, 15.47, 48.3, 561.0, 31.1, 14.99, 14.65, 38.0]
-        }
-        return pd.DataFrame(data)
+        rows = [
+            ("Proxima Cen b", "Proxima Cen", "Radial Velocity", 2016, 1.03, 1.07, 234.0, 1.30),
+            ("TRAPPIST-1 e", "TRAPPIST-1", "Transit", 2017, 0.92, 0.69, 251.0, 12.43),
+            ("Kepler-186 f", "Kepler-186", "Transit", 2014, 1.17, 1.71, 188.0, 178.5),
+            ("51 Peg b", "51 Peg", "Radial Velocity", 1995, 14.3, 150.0, 1284.0, 15.47),
+            ("HD 209458 b", "HD 209458", "Transit", 1999, 15.6, 220.0, 1449.0, 48.3),
+            ("Kepler-452 b", "Kepler-452", "Transit", 2015, 1.63, 3.29, 265.0, 561.0),
+            ("TOI-700 d", "TOI-700", "Transit", 2020, 1.19, 1.72, 269.0, 31.1),
+            ("LHS 1140 b", "LHS 1140", "Transit", 2017, 1.73, 5.60, 235.0, 14.99),
+            ("GJ 1214 b", "GJ 1214", "Transit", 2009, 2.74, 8.17, 596.0, 14.65),
+            ("K2-18 b", "K2-18", "Transit", 2015, 2.61, 8.63, 255.0, 38.0)
+        ]
+        cols = ["pl_name", "hostname", "discoverymethod", "disc_year", "pl_rade", "pl_bmasse", "pl_eqt", "sy_dist"]
+        return pd.DataFrame(rows, columns=cols)
 
 df = load_data()
 
