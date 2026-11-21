@@ -76,7 +76,6 @@ An **exoplanet** (extrasolar planet) is any planet located outside our Solar Sys
 * **Habitable Worlds Observatory (HWO):** A flagship priority of NASA's astrophysics program designed to directly image approximately **25 potentially habitable Earth-sized exoplanets** around nearby stars and analyze their reflected light spectra for **biosignatures**.
 * **Habitable Zone Boundaries:** Calculated from conservative **Kopparapu et al. (2013, 2014)** runaway-greenhouse (inner) and maximum-greenhouse (outer) limits using stellar luminosity (L☉) and effective temperature.
 """)
-
 df = pd.read_csv("exoplanets.csv", on_bad_lines="skip").dropna(subset=["Planet Name"])
 df["Distance (ly)"] = pd.to_numeric(df["Distance (ly)"].astype(str).str.replace("~", "", regex=False).str.strip(), errors="coerce")
 df = df[df["Distance (ly)"].isna() | (df["Distance (ly)"] <= 80.0)].sort_values("Distance (ly)").reset_index(drop=True)
@@ -175,3 +174,50 @@ st.dataframe(display_table.style.map(style_verdict, subset=["HZ Verdict"]), use_
 st.markdown("---")
 st.subheader("🔭 HWO Observation Priority Rankings: Proximity & Biosignature Potential")
 st.markdown(
+    "Based on this 420-planet characterization, the **Habitable Worlds Observatory (HWO)** (alongside JWST transmission/emission follow-up for transiting systems such as **TRAPPIST-1**) will prioritize targets along two complementary axes: **(1) Distance from the Sun** (maximizing angular separation and photon flux) and **(2) Conservative Habitable-Zone & Biosignature Probability**."
+)
+
+col_prox, col_hab = st.columns(2)
+
+with col_prox:
+    st.markdown("""
+    <div class="priority-card-blue">
+        <h4>1. Priority by Distance from Sun (Angular Separation & Flux)</h4>
+        <p>Closer planetary systems provide larger angular star–planet separation (<i>θ = a / d</i>) for coronagraphic starlight suppression and higher reflected-light photon rates.</p>
+        <b>Top 10 Nearest Exoplanet Targets (4.24 – 10.72 ly):</b>
+        <ol>
+            <li><b>Proxima Centauri b</b> (4.244 ly — M5.5 V, Within HZ)</li>
+            <li><b>Proxima Centauri c</b> (4.244 ly — M5.5 V, Candidate)</li>
+            <li><b>Proxima Centauri d</b> (4.244 ly — M5.5 V, Sub-Earth)</li>
+            <li><b>Barnard's Star b</b> (5.957 ly — M3.5–4 V)</li>
+            <li><b>Barnard's Star c</b> (5.957 ly — M3.5–4 V)</li>
+            <li><b>Barnard's Star d</b> (5.957 ly — M3.5–4 V)</li>
+            <li><b>Barnard's Star e</b> (5.957 ly — M3.5–4 V)</li>
+            <li><b>Luhman 16 A b</b> (6.500 ly — L7.5 Brown Dwarf)</li>
+            <li><b>Epsilon Eridani b</b> (10.445 ly — K2 V, Wide Orbit)</li>
+            <li><b>GJ 887 e</b> (10.720 ly — M1 V, Bright Red Dwarf)</li>
+        </ol>
+        <b>Top 50 Nearest Exoplanet Targets (Range: 4.244 – 18.201 ly):</b>
+        <p>Spans the <b>50 closest confirmed & candidate exoplanets</b> across the <b>24 nearest host star systems</b>, beginning at <b>Proxima Centauri b (4.244 ly)</b> and extending outward through <i>Barnard's Star, Epsilon Eridani, GJ 887, Ross 128, GJ 725 A, GJ 15 A, Tau Ceti, Epsilon Indi A, GJ 1061, YZ Ceti, Teegarden's Star, Kapteyn, Wolf 1061, GJ 9066, GJ 674, GJ 687, GJ 876, GJ 1002, GJ 832, GJ 682, GJ 3323</i>, and concluding at <b>GJ 251 c (18.201 ly)</b>.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_hab:
+    st.markdown("""
+    <div class="priority-card-green">
+        <h4>2. Priority by Habitability & Biosignature Probability</h4>
+        <p>Ranked using conservative <b>Kopparapu et al. (2013, 2014)</b> Habitable Zone placement, Earth-like stellar insolation (0.25–1.50 S⊕), rocky composition (R ≤ 1.8 R⊕), and JWST/HWO atmospheric observability.</p>
+        <b>Top 10 High-Probability Habitable & Biosignature Targets:</b>
+        <ol>
+            <li><b>Proxima Centauri b</b> (4.24 ly | 0.64 S⊕ | Teq 218 K) — Closest known terrestrial HZ world; prime HWO direct-imaging target.</li>
+            <li><b>TRAPPIST-1 e</b> (40.70 ly | 0.65 S⊕ | Teq 229 K) — Earth-sized (0.92 R⊕) transiting world; top JWST atmospheric biosignature target.</li>
+            <li><b>Teegarden's Star c</b> (12.49 ly | 0.35 S⊕ | Teq 209 K) — Low-mass (~1.05 M⊕) quiet M-dwarf HZ planet with high Earth Similarity Index.</li>
+            <li><b>GJ 1002 b</b> (15.81 ly | 0.67 S⊕ | Teq 231 K) — Earth-mass (~1.08 M⊕) temperate planet orbiting a magnetically quiet M5.5 V star.</li>
+            <li><b>GJ 1061 d</b> (11.98 ly | 0.57 S⊕ | Teq 222 K) — Temperate rocky planet (~1.67 M⊕) well inside the conservative HZ.</li>
+            <li><b>Wolf 1069 b</b> (31.26 ly | 0.65 S⊕ | Teq 250 K) — Earth-mass (~1.26 M⊕) world receiving ~65% of Earth's solar flux.</li>
+            <li><b>TRAPPIST-1 f</b> (40.70 ly | 0.37 S⊕ | Teq 199 K) — Earth-sized (1.05 R⊕) volatile-rich candidate suited for CO₂/CH₄ spectroscopy.</li>
+            <li><b>LHS 1140 b</b> (48.88 ly | 0.43 S⊕ | Teq 226 K) — Temperate super-Earth (1.73 R⊕); strong JWST candidate for N₂/CO₂ ocean-world atmosphere.</li>
+            <li><b>GJ 1002 c</b> (15.81 ly | 0.26 S⊕ | Teq 182 K) — Outer-HZ terrestrial (~1.36 M⊕) capable of sustaining liquid water under greenhouse warming.</li>
+            <li><b>TRAPPIST-1 g</b> (40.70 ly | 0.25 S⊕ | Teq 181 K) — Outer-HZ terrestrial (1.13 R⊕) completing the multi-planet comparative habitability benchmark.</li>
+        </ol>
+        <b>Top 50 Habitable & Biosignature Detection Candidates:</b>
