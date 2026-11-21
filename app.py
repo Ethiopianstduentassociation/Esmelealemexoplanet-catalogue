@@ -6,19 +6,28 @@ st.set_page_config(page_title="HWO Solar Neighborhood Exoplanet Catalogue", page
 st.markdown("""
 <style>
     .main-header {
-        background: linear-gradient(135deg, #0b132b 0%, #1c2541 50%, #3a506b 100%);
-        padding: 2rem;
+        background: linear-gradient(135deg, #0b132b 0%, #1c2541 55%, #3a506b 100%);
+        padding: 2.2rem;
         border-radius: 14px;
         color: #ffffff;
         margin-bottom: 1.5rem;
         border: 1px solid #5bc0be;
+        box-shadow: 0 4px 16px rgba(11, 19, 43, 0.25);
     }
-    .main-header h1 { color: #ffffff; margin-bottom: 0.4rem; }
-    .main-header p { color: #d8e2dc; font-size: 1.05rem; margin: 0; }
+    .main-header h1 { color: #ffffff; margin-bottom: 0.4rem; font-size: 2.1rem; }
+    .main-header p { color: #e0fbfc; font-size: 1.08rem; margin: 0; }
+    .spotlight-box {
+        background-color: #f0fdf4;
+        border-left: 5px solid #10b981;
+        padding: 1rem 1.25rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        color: #064e3b;
+    }
     .publisher-footer {
-        background-color: #0b132b;
+        background: linear-gradient(135deg, #0b132b 0%, #1c2541 100%);
         color: #5bc0be;
-        padding: 1.2rem;
+        padding: 1.3rem;
         border-radius: 10px;
         text-align: center;
         font-size: 1.15rem;
@@ -28,28 +37,28 @@ st.markdown("""
 </style>
 <div class="main-header">
     <h1>🪐 Solar Neighborhood Exoplanet Catalogue (Within 80 Light-Years)</h1>
-    <p>Comprehensive Characterization of <b>420 Confirmed & Candidate Exoplanets Across 248 Host Star Systems</b> for Habitable Worlds Observatory (HWO) Target Selection</p>
+    <p>Comprehensive Characterization of <b>420 Confirmed & Candidate Exoplanets Across 248 Host Star Systems</b> for NASA Habitable Worlds Observatory (HWO) Target Selection</p>
 </div>
 """, unsafe_allow_html=True)
 
 st.subheader("📖 Scientific Introduction, Detection Methods & Habitable Worlds Observatory (HWO) Context")
 st.markdown("""
 ### What Are Exoplanets?
-An **exoplanet** (extrasolar planet) is any planet located outside our Solar System. While most orbit stars other than our Sun, some drift freely through space without a host star and are known as **rogue planets**. Astronomers have confirmed over 6,000 exoplanets across the Milky Way, grouped into four main categories:
-* **Gas Giants:** Massive worlds composed mostly of hydrogen and helium, similar to Jupiter and Saturn (including close-in *"hot Jupiters"*).
+An **exoplanet** (extrasolar planet) is any planet located outside our Solar System. While most orbit stars other than our Sun, some drift freely through space without a host star and are known as **rogue planets**. Astronomers have confirmed over 6,000 exoplanets across the Milky Way, grouped into four primary classes:
+* **Gas Giants:** Massive worlds composed mostly of hydrogen and helium, similar to Jupiter and Saturn (including scorching close-in *"hot Jupiters"*).
 * **Neptunian Worlds:** Similar in size to Uranus and Neptune, featuring thick hydrogen-helium atmospheres surrounding rocky or heavy-element cores, alongside smaller *"mini-Neptunes"*.
 * **Super-Earths:** Worlds more massive than Earth yet lighter than ice giants like Neptune, composed of rock, gas, or a combination of both.
 * **Terrestrial Planets:** Roughly Earth-sized or smaller worlds composed primarily of rock, silicate, water, or carbon.
 
 ### How Astronomers Detect and Characterize Them
-* **The Transit Method:** Measuring regular dimming of starlight as a planet crosses in front of its star reveals its physical radius and orbital period.
-* **Radial Velocity (The Wobble Method):** Tracking Doppler shifts in a star's light spectrum caused by an orbiting planet's gravitational tug reveals planetary mass.
-* **Atmospheric Spectroscopy:** Analyzing starlight filtered through a transiting planet's atmosphere with telescopes like JWST identifies molecules such as water vapor, carbon dioxide, and methane.
-* **Direct Imaging & Microlensing:** Coronagraphs and starshades suppress host-star glare to capture infrared light from planets, while microlensing uses a passing star's gravity to magnify distant systems.
+* **The Transit Method:** Measuring tiny, regular dips in starlight as a planet crosses in front of its star reveals its physical radius (R⊕) and orbital period.
+* **Radial Velocity (The Wobble Method):** Tracking Doppler shifts in a star's light spectrum caused by an orbiting planet's gravitational tug reveals planetary mass (M⊕).
+* **Atmospheric Spectroscopy:** Analyzing starlight filtered through a transiting planet's atmosphere with telescopes like JWST identifies biosignature-relevant gases such as H₂O, CO₂, and CH₄.
+* **Direct Imaging & Microlensing:** Coronagraphs and starshades suppress host-star glare to capture reflected or thermal light from planets, while gravitational microlensing uses a foreground star's gravity to magnify distant systems.
 
 ### Habitable Worlds Observatory (HWO) & Habitability Modeling
-* **Habitable Worlds Observatory (HWO):** A flagship priority of NASA's astrophysics program designed to directly image approximately **25 potentially habitable Earth-sized exoplanets** around nearby stars and analyze their reflected spectra for **biosignatures**.
-* **Habitable Zone Boundaries:** Calculated from conservative **Kopparapu et al. (2013, 2014)** runaway-greenhouse (inner) and maximum-greenhouse (outer) limits using stellar luminosity and effective temperature.
+* **Habitable Worlds Observatory (HWO):** A flagship priority of NASA's astrophysics program designed to directly image approximately **25 potentially habitable Earth-sized exoplanets** around nearby stars and analyze their reflected light spectra for **biosignatures**.
+* **Habitable Zone Boundaries:** Calculated from conservative **Kopparapu et al. (2013, 2014)** runaway-greenhouse (inner) and maximum-greenhouse (outer) limits using stellar luminosity (L☉) and effective temperature.
 """)
 
 df = pd.read_csv("exoplanets.csv", on_bad_lines="skip").dropna(subset=["Planet Name"])
@@ -57,6 +66,7 @@ df["Distance (ly)"] = pd.to_numeric(df["Distance (ly)"].astype(str).str.replace(
 df = df[df["Distance (ly)"].isna() | (df["Distance (ly)"] <= 80.0)].sort_values("Distance (ly)").reset_index(drop=True)
 df["T_num"] = pd.to_numeric(df["Equilibrium Temp (K)"].astype(str).str.replace("~", "", regex=False).str.replace("*", "", regex=False).str.replace(",", "", regex=False), errors="coerce")
 df["A_num"] = pd.to_numeric(df["Semimajor Axis (AU)"].astype(str).str.replace("~", "", regex=False).str.replace(",", "", regex=False), errors="coerce")
+df["R_num"] = pd.to_numeric(df["Radius (R_Earth)"].astype(str).str.replace("~", "", regex=False).str.replace(",", "", regex=False), errors="coerce")
 
 st.sidebar.header("🔭 Filter HWO Target Sample")
 verdict_opts = sorted(df["HZ Verdict"].dropna().unique())
@@ -97,21 +107,58 @@ c2.metric("Within Habitable Zone", len(filt[filt["HZ Verdict"] == "Within HZ"]))
 c3.metric("Host Star Systems", filt["Host Star"].nunique())
 c4.metric("Avg Equilibrium Temp (K)", round(filt["T_num"].mean(), 1) if filt["T_num"].notna().any() else "N/A")
 
+st.subheader("🎯 Top Priority HWO Rocky Habitable-Zone Candidates (Radius ≤ 1.8 R⊕)")
+st.markdown("""
+<div class="spotlight-box">
+    <b>Scientific Target Selection:</b> Filtering the 80 light-year solar neighborhood for planets orbiting <b>Within the Habitable Zone</b> with terrestrial/super-Earth radii (<b>≤ 1.8 R⊕</b>) isolates prime rocky candidates for future Habitable Worlds Observatory direct-imaging spectroscopy.
+</div>
+""", unsafe_allow_html=True)
+
+hwo_top = filt[(filt["HZ Verdict"] == "Within HZ") & (filt["R_num"] <= 1.8)][
+    ["Planet Name", "Host Star", "Distance (ly)", "Spectral Type", "Mass (M_Earth)", "Radius (R_Earth)", "Semimajor Axis (AU)", "Equilibrium Temp (K)", "Incident Flux (S_Earth)"]
+]
+if not hwo_top.empty:
+    st.dataframe(hwo_top, use_container_width=True, hide_index=True)
+else:
+    st.info("Adjust sidebar filters to display rocky Habitable Zone candidates (≤ 1.8 R⊕).")
+
 st.subheader("📊 Orbital Distance (AU) vs. Equilibrium Temperature (K)")
 p_df = filt[["A_num", "T_num", "HZ Verdict"]].dropna()
 p_df = p_df[p_df["A_num"] < 50].rename(columns={"A_num": "Semimajor Axis (AU)", "T_num": "Equilibrium Temp (K)"})
 if not p_df.empty:
     st.scatter_chart(p_df, x="Semimajor Axis (AU)", y="Equilibrium Temp (K)", color="HZ Verdict")
 
-st.subheader("🪐 Complete 19-Parameter Exoplanet & Host Star Catalogue (248 Systems | 420 Planets)")
-st.dataframe(filt.drop(columns=["T_num", "A_num", "Star Class"]), use_container_width=True)
+col_title, col_dl = st.columns([3, 1])
+with col_title:
+    st.subheader("🪐 Complete 19-Parameter Exoplanet & Host Star Catalogue")
+with col_dl:
+    clean_export = filt.drop(columns=["T_num", "A_num", "R_num", "Star Class"])
+    st.download_button(
+        label="⬇️ Download Filtered CSV",
+        data=clean_export.to_csv(index=False).encode("utf-8"),
+        file_name="HWO_Solar_Neighborhood_Exoplanet_Catalogue.csv",
+        mime="text/csv",
+    )
+
+def style_verdict(val):
+    v = str(val)
+    if v == "Within HZ":
+        return "background-color: #d1fae5; color: #065f46; font-weight: 700;"
+    elif v == "Interior to HZ":
+        return "background-color: #fef3c7; color: #92400e; font-weight: 600;"
+    elif v == "Outside HZ":
+        return "background-color: #e0f2fe; color: #075985; font-weight: 600;"
+    return "background-color: #f3f4f6; color: #374151;"
+
+display_table = filt.drop(columns=["T_num", "A_num", "R_num", "Star Class"])
+st.dataframe(display_table.style.map(style_verdict, subset=["HZ Verdict"]), use_container_width=True, hide_index=True)
 
 st.subheader("📚 Data Notes, Equations & Methodology")
 st.markdown("""
 * **Scope:** Every confirmed planet (plus candidate Proxima Centauri c) whose host star lies within **80 light-years** (248 host stars, 420 planets), ranked by distance from the Sun.
 * **Habitable Zone Model:** Conservative **Kopparapu et al. (2013, 2014)** runaway-greenhouse (inner) and maximum-greenhouse (outer) limits using stellar luminosity and effective temperature.
 * **Approximations (`~`):** Marks estimated or recalled literature values (main-sequence stellar relations after Pecaut & Mamajek; Chen & Kipping style planetary mass–radius relation).
-* **Equilibrium Temperature & Flux:** Calculated via $S = L/a^2$ and $T_{eq} = 255\\text{ K} \\times S^{0.25}$ (Bond albedo $0.3$, full heat redistribution) where archive values were unavailable.
+* **Equilibrium Temperature & Flux:** Calculated via `S = L / a²` and `Teq = 255 K × S^0.25` (Bond albedo 0.3, full heat redistribution) where archive values were unavailable.
 """)
 
 st.markdown("""
