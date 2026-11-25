@@ -1,8 +1,10 @@
 import streamlit as st
 import pandas as pd
-
-st.set_page_config(page_title="HWO Solar Neighborhood Exoplanet Catalogue", page_icon="🪐", layout="wide")
-
+st.set_page_config(
+    page_title="Esmelealem Exoplanet Catalogue | HWO Solar Neighborhood Targets",
+    page_icon="🪐",
+    layout="wide"
+)
 st.markdown("""
 <style>
     .main-header {
@@ -52,8 +54,8 @@ st.markdown("""
     }
 </style>
 <div class="main-header">
-    <h1>🪐 Solar Neighborhood Exoplanet Catalogue (Within 80 Light-Years)</h1>
-    <p>Comprehensive Characterization of <b>420 Confirmed & Candidate Exoplanets Across 248 Host Star Systems</b> for NASA Habitable Worlds Observatory (HWO) Target Selection</p>
+    <h1>🪐 Esmelealem Exoplanet Catalogue: HWO Solar Neighborhood</h1>
+    <p>Characterizing exoplanets within 80 light-years of our Sun to predict prime target exoplanets for NASA's Habitable Worlds Observatory (HWO).</p>
 </div>
 """, unsafe_allow_html=True)
 
