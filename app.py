@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 st.set_page_config(
-    page_title="Esmelealem Exoplanet Catalogue | HWO Solar Neighborhood Targets",
+    page_title="HWO Solar Neighborhood Exoplanet Catalogue",
     page_icon="🪐",
     layout="wide"
 )
@@ -53,8 +53,9 @@ st.markdown("""
         border: 1px solid #3a506b;
     }
 </style>
+
 <div class="main-header">
-    <h1>🪐 Esmelealem Exoplanet Catalogue: HWO Solar Neighborhood</h1>
+    <h1>🪐 HWO Solar Neighborhood Exoplanet Catalogue</h1>
     <p>Characterizing exoplanets within 80 light-years of our Sun to predict prime target exoplanets for NASA's Habitable Worlds Observatory (HWO).</p>
 </div>
 """, unsafe_allow_html=True)
