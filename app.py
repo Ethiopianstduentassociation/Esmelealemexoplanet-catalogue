@@ -1,5 +1,19 @@
 import streamlit as st
 import pandas as pd
+import pathlib
+import shutil
+from bs4 import BeautifulSoup
+
+GA_SCRIPT = """PASTE_YOUR_META_TAG_HERE"""
+index_path = pathlib.Path(st.__file__).parent / "static" / "index.html"
+soup = BeautifulSoup(index_path.read_text(), features="html.parser")
+if not soup.find("meta", {"name": "google-site-verification"}):
+    bck_index = index_path.with_suffix(".bck")
+    if not bck_index.exists():
+        shutil.copy(index_path, bck_index)
+    html = str(soup)
+    new_html = html.replace("<head>", "<head>\n" + GA_SCRIPT)
+    index_path.write_text(new_html)
 st.set_page_config(
     page_title="HWO Solar Neighborhood Exoplanet Catalogue",
     page_icon="🪐",
